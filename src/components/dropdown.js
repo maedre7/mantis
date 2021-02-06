@@ -1,35 +1,33 @@
-import {Menu, Dropdown, Button} from 'antd';
-import {DownOutlined} from '@ant-design/icons';
-import {TOKEN_LIST} from '../config/config';
+import Select from "antd/lib/select";
+import {TOKENS} from '../config/config';
 
-const DropdownView = (props) => {
+const { Option } = Select;
 
-  const onClick = (e) => {
+const Dropdown = (props) => {
+
+  const tokens = Object.keys(TOKENS);
+
+  const onChange = (val) => {
     if(props.mode == '1'){
-      props.onSelect('tokenIn', TOKEN_LIST[e.key])
+      props.onSelect('tokenIn', val);
     }
     else{
-      props.onSelect('leverageToken', TOKEN_LIST[e.key])
+      props.onSelect('leverageToken', val);
     }
   }
-
-  const menu = (
-    <Menu onClick={(e) => onClick(e)}>
-      {
-        TOKEN_LIST.map((token, index) => (
-          <Menu.Item key={index} icon={<img className="dropdown-icon" src={`/images/${token.toLowerCase()}.svg`} />}>
-            {token}
-          </Menu.Item>
-        ))
-      }
-    </Menu>
-  );
+  
+  const defaultValue = props.mode == '1' ? "DAI" : "WETH";
 
   return (
-    <Dropdown overlay={menu}>
-      <Button>Button <DownOutlined /></Button>
-    </Dropdown>
+    <Select defaultValue={defaultValue} size={'large'} style={{ width: 120 }} onChange={onChange}>
+      {tokens.map((symbol, index) => (
+        <Option value={symbol} style={{height: 50}}>
+          <img className="dropdown-icon" src={`/images/${symbol.toLowerCase()}.svg`} />
+          {symbol}
+        </Option>
+      ))}
+    </Select>
   );
 }
 
-export default DropdownView;
+export default Dropdown;

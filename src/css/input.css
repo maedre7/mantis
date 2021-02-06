@@ -7,7 +7,7 @@
 }
 .form__field {
   font-family: inherit;
-  width: 100%;
+  width: 100px;
   border: 0;
   border-bottom: 2px solid #9b9b9b;
   outline: 0;
@@ -37,7 +37,7 @@
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, #7652ff, #7652ff);
+  border-image: linear-gradient(to right, #007ee5, #007ee5);
   border-image-slice: 1;
 }
 .form__field:focus ~ .form__label {
@@ -46,7 +46,7 @@
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #7652ff;
+  color: #007ee5;
   font-weight: 700;
 }
 /* reset input */
