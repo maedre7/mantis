@@ -1,7 +1,7 @@
 // check if should use embedded web3 itself
 import Web3 from "web3";
-import {PROTOCOL, TOKENS} from '../config/config';
-import {TOKEN_ABI, DEBT_TOKEN_ABI, MANTIS_ABI} from "./abi";
+import {PROTOCOL, TOKENS, TOKEN_CONFIG} from '../config/config';
+import {TOKEN_ABI, DEBT_TOKEN_ABI, MANTIS_ABI, BALANCE_CHECKER_ABI, FAUCET_ABI} from "./abi";
 import fetchCalldata from './swap';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8546");
@@ -21,7 +21,7 @@ export const getAccounts = (args) => {
 
 // Approve tokenIn to Mantis
 export const approve = (tokenIn, amount, account) => {
-	tokenIn = TOKENS[tokenIn].underlyingAsset;
+	tokenIn = TOKENS[tokenIn];
 	amount = toWei(amount);
   const tokenContract = new web3.eth.Contract(TOKEN_ABI, tokenIn);
 	const promise = new Promise(async(resolve, reject) => {
@@ -38,7 +38,7 @@ export const approve = (tokenIn, amount, account) => {
 
 // Fetch tokenIn allowance
 export const fetchAllowance = (tokenIn, account) => {
-	tokenIn = TOKENS[tokenIn].underlyingAsset;
+	tokenIn = TOKENS[tokenIn];
   const tokenContract = new web3.eth.Contract(TOKEN_ABI, tokenIn);
 	const promise = new Promise(async(resolve, reject) => {
 		try{
@@ -54,7 +54,7 @@ export const fetchAllowance = (tokenIn, account) => {
 
 // Approve delegation
 export const approveDelegation = (borrowToken, amount, mode, account) => {
-	const debtToken = mode == 1 ? TOKENS[borrowToken].sToken : TOKENS[borrowToken].vToken;
+	const debtToken = mode == 1 ? TOKEN_CONFIG[borrowToken].sToken : TOKEN_CONFIG[borrowToken].vToken;
 	amount = toWei(amount);
 	amount = amount + (amount * 9) / 10000
   const debtTokenContract = new web3.eth.Contract(DEBT_TOKEN_ABI, debtToken);
@@ -72,7 +72,7 @@ export const approveDelegation = (borrowToken, amount, mode, account) => {
 
 // Fetch borrow allowance
 export const fetchBorrowAllowance = (borrowToken, mode, account) => {
-	const debtToken = mode == 1 ? TOKENS[borrowToken].sToken : TOKENS[borrowToken].vToken
+	const debtToken = mode == 1 ? TOKEN_CONFIG[borrowToken].sToken : TOKEN_CONFIG[borrowToken].vToken
   const debtTokenContract = new web3.eth.Contract(DEBT_TOKEN_ABI, debtToken);
 	const promise = new Promise(async(resolve, reject) => {
 		try{
@@ -88,8 +88,8 @@ export const fetchBorrowAllowance = (borrowToken, mode, account) => {
 
 // Call leverage on Mantis
 export const leverage = (tokenIn, leverageToken, amount, deposit, borrow, mode, account) => {
-	tokenIn = TOKENS[tokenIn].underlyingAsset;
-	leverageToken = TOKENS[leverageToken].underlyingAsset;
+	tokenIn = TOKENS[tokenIn];
+	leverageToken = TOKENS[leverageToken];
 	amount = toWei(amount);
 	deposit = toWei(deposit);
 	borrow = toWei(borrow);
@@ -98,6 +98,21 @@ export const leverage = (tokenIn, leverageToken, amount, deposit, borrow, mode, 
 		try{
 			const calldata = await fetchCalldata(tokenIn, leverageToken, deposit, PROTOCOL.MANTIS);
 			const result = await mantis.methods.leverage(tokenIn, leverageToken, amount, deposit, borrow, mode, calldata).send({from: account});
+			resolve(result);
+		}
+		catch(e){
+			reject(e);
+		}
+	});
+	return promise;
+}
+
+export const fetchBalances = (account) => {
+  const balanceChecker = new web3.eth.Contract(BALANCE_CHECKER_ABI, PROTOCOL.BALANCE_CHECKER);
+	const promise = new Promise(async(resolve, reject) => {
+		try{
+			const tokens = Object.values(TOKENS);
+			const result = await balanceChecker.methods.balances([account], tokens).call();
 			resolve(result);
 		}
 		catch(e){
