@@ -1,6 +1,6 @@
 import Home from './components/home';
 
-function App() {
+const App = () => {
   return (
     <div className="App">
       <Home />
