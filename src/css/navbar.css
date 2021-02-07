@@ -1,0 +1,26 @@
+.tradable-navbar a {
+  font-size: 18px;
+}
+
+.my_navbar {
+  margin-bottom: 25px;
+  background-color: var(--blue);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#navbar-logo {
+  height: 50px;
+  padding-right: 5px;
+}
+
+#navbar-name {
+  font-size: 30px;
+}
+
+.navbar-link-text {
+  color: white;
+}
+
+#navbar-network {
+  font-size: 14px;
+}

@@ -37,7 +37,7 @@
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, #007ee5, #007ee5);
+  border-image: linear-gradient(to right, var(--green), var(--green));
   border-image-slice: 1;
 }
 .form__field:focus ~ .form__label {
@@ -46,7 +46,7 @@
   display: block;
   transition: 0.2s;
   font-size: 1rem;
-  color: #007ee5;
+  color: var(--green);
   font-weight: 700;
 }
 /* reset input */

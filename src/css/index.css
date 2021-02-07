@@ -4,3 +4,10 @@
 @import 'steps';
 @import 'dropdown';
 @import 'wallet';
+@import 'navbar';
+@import 'metamask';
+@import 'slider';
+@import 'status';
+@import 'page';
+@import 'overview';
+@import 'header';

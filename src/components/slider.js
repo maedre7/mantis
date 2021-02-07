@@ -10,6 +10,9 @@ const SliderView = (props) => {
           onChange={(val) => props.onChange('ltv', val)}
           value={props.value}  // typeof inputValue === 'number' ? inputValue : 0
           step={0.01}
+          trackStyle={{ backgroundColor: '#40C4A6' }}
+          handleStyle={{ borderColor: '#40C4A6' }}
+          defaultValue={0.50}
         />
       </Col>
       <Col span={4}>

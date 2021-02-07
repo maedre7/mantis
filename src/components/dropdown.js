@@ -1,22 +1,24 @@
 import Select from "antd/lib/select";
-import {TOKENS} from '../config/config';
 
 const { Option } = Select;
 
 const Dropdown = (props) => {
 
-  const tokens = Object.keys(TOKENS);
+  const tokens = Object.keys(props.tokens);
 
   const onChange = (val) => {
     if(props.mode == '1'){
       props.onSelect('tokenIn', val);
     }
-    else{
+    else if(props.mode == '2'){
       props.onSelect('leverageToken', val);
+    }
+    else {
+      props.onSelect(val);
     }
   }
   
-  const defaultValue = props.mode == '1' ? "DAI" : "WETH";
+  const defaultValue = (props.mode == '1' || props.mode == '3') ? "DAI" : "WETH";
 
   return (
     <Select defaultValue={defaultValue} size={'large'} style={{ width: 120 }} onChange={onChange}>

@@ -7,26 +7,32 @@
 }
 
 #home-container {
-  width: 40%;
+  height: 500px;
+  width: 1200px;
 }
 
 #home-portal {
-  height: 500px;
+  height: 100%;
   width: 100%;
   display: flex;
 }
 
 #home-portal-left {
   height: 100%;
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 #home-portal-right {
   height: 100%;
-  width: 50%;
+  width: 30%;
+}
+
+#home-portal-positions {
+  height: 100%;
+  width: 30%;
 }
 
 .home-portal-input {

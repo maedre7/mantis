@@ -29,7 +29,7 @@
 }
 
 #wallet-faucet-container {
-  height: 250px;
+  height: 100px;
   width: 25%;
   flex-direction: column;
   align-items: center;
@@ -46,4 +46,8 @@
 #wallet-faucet-heading {
   margin-top: 25px;
   margin-bottom: 25px;
+}
+
+.wallet-button {
+  margin-top: 10px;
 }

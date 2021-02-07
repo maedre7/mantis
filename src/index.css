@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.button:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+:root {
+  --blue: #1158D1;
+  --green: #40C4A6;
+}

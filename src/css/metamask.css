@@ -1,0 +1,57 @@
+#metamask_container {
+	height: 100vh;
+	width: 100vw;
+	padding: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #F7F9FB;
+}
+
+#metamask_sub_container {
+	height: 350px;
+	padding: 5px;
+	padding-top: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	background-color: white;
+	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+#metamask_icon {
+	height: 75px;
+	width: 75px;
+}
+
+#metamask_sub_container p {
+	text-align: center;
+}
+
+#metamask_header {
+	font-size: 1.5rem;
+	color: #007ee5;
+}
+
+#metamask_description {
+	font-size: 1rem;
+}
+
+@media only screen and (max-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  html {
+    font-size: 20px;
+  }
+}
