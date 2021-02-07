@@ -643,4 +643,94 @@ const FAUCET_ABI = [
 	}
 ];
 
-export {TOKEN_ABI, DEBT_TOKEN_ABI, MANTIS_ABI, BALANCE_CHECKER_ABI, FAUCET_ABI};
+const DATA_PROVIDER_ABI = [
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "token",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getUserReserveData",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "currentATokenBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentStableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentVariableDebt",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct DataProvider.UserReserveData",
+				"name": "userReserveData",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "tokens",
+				"type": "address[]"
+			},
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getUserReservesData",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "currentATokenBalance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentStableDebt",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "currentVariableDebt",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct DataProvider.UserReserveData[]",
+				"name": "data",
+				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+
+export {TOKEN_ABI, DEBT_TOKEN_ABI, MANTIS_ABI, BALANCE_CHECKER_ABI, FAUCET_ABI, DATA_PROVIDER_ABI};

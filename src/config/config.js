@@ -2,30 +2,25 @@
 export const PROTOCOL = {
   MANTIS: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
   BALANCE_CHECKER: "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-  FAUCET: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0"
+  FAUCET: "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
+  DATA_PROVIDER: "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
 }
 
 export const TOKENS = {
   TUSD: '0x0000000000085d4780b73119b644ae5ecd22b376',
-  GUSD: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
-  YFI: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
   BAT: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
   MANA: '0x0f5d2fb29fb7d3cfee444a200298f468908cc942',
   UNI: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
-  WBTC: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
   REN: '0x408e41876cccdc0f92210600ef50372656052a38',
   BUSD: '0x4fabb145d64652a948d72533023f6e7a623c7c53',
   LINK: '0x514910771af9ca656af840dff83e8264ecf986ca',
   SUSD: '0x57ab1ec28d129707052df4df418d58a2d46d5f51',
   DAI: '0x6b175474e89094c44da98b954eedeac495271d0f',
   AAVE: '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9',
-  MKR: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
-  USDC: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
   BAL: '0xba100000625a3754423978a60c9317c58a424e3d',
   SNX: '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f',
   WETH: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   CRV: '0xd533a949740bb3306d119cc777fa900ba034cd52',
-  USDT: '0xdac17f958d2ee523a2206206994597c13d831ec7',
   KNC: '0xdd974d5c2e2928dea5f71b9825b8b646686bd200',
   ZRX: '0xe41d2489571d322189246dafa5ebde1f4699f498',
   ENJ: '0xf629cbd94d3791c9250152bd8dfbdf380e2a3b9c'
@@ -38,20 +33,6 @@ export const TOKEN_CONFIG = {
     aToken: '0x101cc05f4a51c0319f570d5e146a8c625198e636',
     sToken: '0x7f38d60d94652072b2c44a18c0e14a481ec3c0dd',
     vToken: '0x01c0eb1f8c6f1c1bf74ae028697ce7aa2a8b0e92'
-  },
-  GUSD: {
-    underlyingAsset: '0x056fd409e1d7a124bd7017459dfea2f387b6d5cd',
-    baseLTVasCollateral: '0',
-    aToken: '0xd37ee7e4f452c6638c96536e68090de8cbcdb583',
-    sToken: '0xf8ac64ec6ff8e0028b37eb89772d21865321bce0',
-    vToken: '0x279af5b99540c1a3a7e3cdd326e19659401ef99e'
-  },
-  YFI: {
-    underlyingAsset: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
-    baseLTVasCollateral: '4000',
-    aToken: '0x5165d24277cd063f5ac44efd447b27025e888f37',
-    sToken: '0xca823f78c2dd38993284bb42ba9b14152082f7bd',
-    vToken: '0x7ebd09022be45ad993baa1cec61166fcc8644d97'
   },
   BAT: {
     underlyingAsset: '0x0d8775f648430679a709e98d2b0cb6250d2887ef',
@@ -73,13 +54,6 @@ export const TOKEN_CONFIG = {
     aToken: '0xb9d7cb55f463405cdfbe4e90a6d2df01c2b92bf1',
     sToken: '0xd939f7430dc8d5a427f156de1012a56c18acb6aa',
     vToken: '0x5bdb050a92cadccfcdcccbfc17204a1c9cc0ab73'
-  },
-  WBTC: {
-    underlyingAsset: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-    baseLTVasCollateral: '7000',
-    aToken: '0x9ff58f4ffb29fa2266ab25e75e2a8b3503311656',
-    sToken: '0x51b039b9afe64b78758f8ef091211b5387ea717c',
-    vToken: '0x9c39809dec7f95f5e0713634a4d0701329b3b4d2'
   },
   REN: {
     underlyingAsset: '0x408e41876cccdc0f92210600ef50372656052a38',
@@ -123,20 +97,6 @@ export const TOKEN_CONFIG = {
     sToken: '0x079d6a3e844bcecf5720478a718edb6575362c5f',
     vToken: '0xf7dba49d571745d9d7fcb56225b05bea803ebf3c'
   },
-  MKR: {
-    underlyingAsset: '0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2',
-    baseLTVasCollateral: '6000',
-    aToken: '0xc713e5e149d5d0715dcd1c156a020976e7e56b88',
-    sToken: '0xc01c8e4b12a89456a9fd4e4e75b72546bf53f0b5',
-    vToken: '0xba728ead5e496be00dcf66f650b6d7758ecb50f8'
-  },
-  USDC: {
-    underlyingAsset: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-    baseLTVasCollateral: '8000',
-    aToken: '0xbcca60bb61934080951369a648fb03df4f96263c',
-    sToken: '0xe4922afab0bbadd8ab2a88e0c79d884ad337fca6',
-    vToken: '0x619beb58998ed2278e08620f97007e1116d5d25b'
-  },
   BAL: {
     underlyingAsset: '0xba100000625a3754423978a60c9317c58a424e3d',
     baseLTVasCollateral: '5500',
@@ -164,13 +124,6 @@ export const TOKEN_CONFIG = {
     aToken: '0x8dae6cb04688c62d939ed9b68d32bc62e49970b1',
     sToken: '0x9288059a74f589c919c7cf1db433251cdfeb874b',
     vToken: '0x00ad8ebf64f141f1c81e9f8f792d3d1631c6c684'
-  },
-  USDT: {
-    underlyingAsset: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-    baseLTVasCollateral: '0',
-    aToken: '0x3ed3b47dd13ec9a98b44e6204a523e766b225811',
-    sToken: '0xe91d55ab2240594855abd11b3faae801fd4c4687',
-    vToken: '0x531842cebbdd378f8ee36d171d6cc9c4fcf475ec'
   },
   KNC: {
     underlyingAsset: '0xdd974d5c2e2928dea5f71b9825b8b646686bd200',

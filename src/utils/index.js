@@ -1,10 +1,42 @@
 // check if should use embedded web3 itself
+import axios from "axios";
 import Web3 from "web3";
 import {PROTOCOL, TOKENS, TOKEN_CONFIG} from '../config/config';
-import {TOKEN_ABI, DEBT_TOKEN_ABI, MANTIS_ABI, BALANCE_CHECKER_ABI, FAUCET_ABI} from "./abi";
+import {TOKEN_ABI, DEBT_TOKEN_ABI, MANTIS_ABI, BALANCE_CHECKER_ABI, FAUCET_ABI, DATA_PROVIDER_ABI} from "./abi";
 import fetchCalldata from './swap';
 
 const web3 = new Web3(Web3.givenProvider || "ws://localhost:8546");
+
+export const enableMetamask = () => {
+	const promise = new Promise(async(resolve, reject) => {
+		try{
+			await window.ethereum.enable();
+			resolve();
+		}
+		catch(e){
+			reject(e);
+		}
+	});
+	return promise;
+}
+
+export const getNetwork = () => {
+	const promise = new Promise(async(resolve, reject) => {
+		try{
+			const chainId = await web3.eth.net.getId();
+			if(chainId == 31337){
+				resolve();
+			}
+			else{
+				reject();
+			}
+		}
+		catch(e){
+			reject(e);
+		}
+	});
+	return promise;
+}
 
 export const getAccounts = (args) => {
 	const promise = new Promise(async(resolve, reject) => {
@@ -122,9 +154,82 @@ export const fetchBalances = (account) => {
 	return promise;
 }
 
+export const getTokens = (token, account) => {
+  const faucet = new web3.eth.Contract(FAUCET_ABI, PROTOCOL.FAUCET);
+	const promise = new Promise(async(resolve, reject) => {
+		try{
+			const result = await faucet.methods.getTokens(token).send({from: account});
+			resolve(result);
+		}
+		catch(e){
+			reject(e);
+		}
+	});
+	return promise;
+}
+
+export const fetchUserData = (account) => {
+	const promise = new Promise(async(resolve, reject) => {
+		try{
+			const tokens = Object.values(TOKENS);
+			const symbols = Object.keys(TOKENS);
+  		const dataProvider = new web3.eth.Contract(DATA_PROVIDER_ABI, PROTOCOL.DATA_PROVIDER);
+			const reserves = await dataProvider.methods.getUserReservesData(tokens,  account).call();
+			console.log(reserves);
+			const result = reserves.reduce((obj, reserve, index) => {
+				const {currentATokenBalance, currentStableDebt, currentVariableDebt} = reserve;
+				console.log(currentATokenBalance, currentStableDebt, currentVariableDebt);
+				if(currentATokenBalance > 0){
+					obj.deposits.push({
+						symbol: symbols[index],
+						amount: currentATokenBalance
+					});
+				}
+				else if(currentStableDebt > 0 || currentVariableDebt > 0){
+					obj.borrows.push({
+						symbol: symbols[index],
+						amount: currentStableDebt + currentVariableDebt
+					});
+				}
+				return obj;
+			}, {deposits: [], borrows: []});
+			resolve(result);
+		}
+		catch(e){
+			reject(e);
+		}
+	});
+	return promise;
+}
+
+export const fetchPrices = () => {
+	const tokens = Object.values(TOKENS).toString();
+	const promise = new Promise(async(resolve, reject) => {
+		const url = 'https://api.coingecko.com/api/v3/simple/token_price/ethereum';
+		try{
+			let result = await axios(url, {
+				params: {
+					contract_addresses: tokens,
+					vs_currencies: 'usd'
+				}
+			});
+			resolve(result.data);
+		}
+		catch(e){
+			reject(e);
+		}
+	});
+	return promise;
+}
+
 export const fromWei = (amount) => {
 	try{
-		return Web3.utils.fromWei(amount.toString());
+		if(amount != undefined){
+			return round(Web3.utils.fromWei(amount.toString()));
+		}
+		else{
+			return '0';
+		}
 	}
 	catch(e){
 		console.log(e);
@@ -133,9 +238,19 @@ export const fromWei = (amount) => {
 
 export const toWei = (amount) => {
 	try{
-		return Web3.utils.toWei(amount.toString());
+		if(amount != undefined){
+			return Web3.utils.toWei(amount.toString());
+		}
+		else{
+			return '0';
+		}
 	}
 	catch(e){
 		console.log(e);
 	}
+}
+
+export const round = (number, digits=3) => {
+	const _number = 10 ** digits;
+  return Math.floor(number * _number)/_number;
 }
