@@ -7,18 +7,21 @@
 }
 
 #wallet-list {
-  width: 25%;
+  height: 300px;
+  width: 80%;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .wallet-list-item {
   height: 40px;
-  width: 100%;
+  width: 20%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 25px;
   padding-right: 25px;
-  margin-bottom: 20px;
+  margin-left: 20px;
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 

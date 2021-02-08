@@ -4,6 +4,8 @@ const { Option } = Select;
 
 const Dropdown = (props) => {
 
+  const blacklist = ['BUSD', 'SUSD'];
+
   const tokens = Object.keys(props.tokens);
 
   const onChange = (val) => {
@@ -11,7 +13,12 @@ const Dropdown = (props) => {
       props.onSelect('tokenIn', val);
     }
     else if(props.mode == '2'){
-      props.onSelect('leverageToken', val);
+      if(blacklist.includes(val)){
+        alert(`Aave doesn't support borrowing against ${val} asset. Please chose another asset to leverage.`)
+      }
+      else{
+        props.onSelect('leverageToken', val);
+      }
     }
     else {
       props.onSelect(val);

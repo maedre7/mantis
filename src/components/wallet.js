@@ -2,8 +2,10 @@ import React from "react";
 import {connect} from 'react-redux';
 import Button from 'antd/lib/button';
 import Dropdown from './dropdown';
-import {fetchBalances, getTokens, fromWei} from '../utils/index';
+import {_getTokens} from '../actions/tx';
+import {fromWei} from '../utils/index';
 import {TOKENS} from '../config/config';
+import {getBalances} from "../actions/index";
 
 class Wallet extends React.Component{
 
@@ -11,21 +13,12 @@ class Wallet extends React.Component{
     super(props);
     this.state = {
       token: 'DAI',
-      balances: []
     }
     this.symbols = Object.keys(TOKENS);
   }
 
-  async componentDidMount(){
-    try{
-      const balances = await fetchBalances(this.props.account);
-      this.setState(({
-        balances
-      }));
-    }
-    catch(e){
-      console.log(e);
-    }
+  componentDidMount(){
+    this.props.dispatch(getBalances());
   }
 
   onSelect = (token) => {
@@ -36,8 +29,7 @@ class Wallet extends React.Component{
 
   getFaucet = async() => {
     try{
-      const token = TOKENS[this.state.token];
-      await getTokens(token, this.props.account);
+      this.props.dispatch(_getTokens(this.state.token));
     }
     catch(e){
       console.log(e);
@@ -63,7 +55,7 @@ class Wallet extends React.Component{
                   <img className="wallet-list-item-icon" src={`/images/${symbol.toLowerCase()}.svg`} />
                   <span>{symbol}</span>
                 </div>
-                <span>{fromWei(this.state.balances[index])}</span>
+                <span>{fromWei(this.props.balances[index])}</span>
               </div>
             ))
           }
@@ -76,7 +68,8 @@ class Wallet extends React.Component{
 
 const mapStateToProps = (state) => {
 	return{
-		account: state.account,
+    account: state.account,
+    balances: state.balance
 	};
 };
 

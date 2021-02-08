@@ -1,7 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import Steps from 'antd/lib/steps';
 import Button from 'antd/lib/button';
-import {approve, fetchAllowance, approveDelegation, leverage} from "../utils/index";
+import {_approve, _approveDelegation, _leverage} from "../actions/tx";
 import {TOKENS} from '../config/config';
 
 const {Step} = Steps;
@@ -26,24 +27,9 @@ class StepsView extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      loading: false,
       current: 0
     }
   }
-
-  /*async componentDidMount(){
-    const {tokenIn, account} = this.props;
-    try{
-      const allowance = await fetchAllowance(tokenIn, account);
-      console.log('-------', allowance);
-      if(allowance > 0){
-        this.next();
-      }
-    }
-    catch(e){
-      console.log(e);
-    }
-  }*/
 
   onChange = (current) => {
     this.setState(({
@@ -56,50 +42,20 @@ class StepsView extends React.Component{
       current: prevState.current + 1
     }));
   }
-
-  changeLoading = () => {
-    this.setState((prevState) => ({
-      loading: !prevState.loading
-    }));
-  }
   
   approve = async() => {
-    const {tokenIn, amount, account} = this.props;
-    this.changeLoading();
-    try{
-      await approve(tokenIn, amount, account);
-      this.next();
-    }
-    catch(e){
-      console.log(e);
-    }
-    this.changeLoading();
+    const {tokenIn, amount} = this.props;
+    this.props.dispatch(_approve(tokenIn, amount, this.next));
   }
 
   approveDelegation = async() => {
-    const {tokenIn, borrow, mode, account} = this.props;
-    this.changeLoading();
-    try{
-      await approveDelegation(tokenIn, borrow, mode, account);
-      this.next();
-    }
-    catch(e){
-      console.log(e);
-    }
-    this.changeLoading();
+    const {tokenIn, borrow, mode} = this.props;
+    this.props.dispatch(_approveDelegation(tokenIn, borrow, mode, this.next));
   }
 
   leverage = async() => {
-    const {tokenIn, leverageToken, amount, deposit, borrow, mode, account} = this.props;
-    this.changeLoading();
-    try{
-      await leverage(tokenIn, leverageToken, amount, deposit, borrow, mode, account);
-      this.next();
-    }
-    catch(e){
-      console.log(e);
-    }
-    this.changeLoading();
+    const {tokenIn, leverageToken, amount, deposit, borrow, mode} = this.props;
+    this.props.dispatch(_leverage(tokenIn, leverageToken, amount, deposit, borrow, mode, this.props.close));
   }
 
   render(){
@@ -111,7 +67,7 @@ class StepsView extends React.Component{
         <Steps current={this.state.current} onChange={this.onChange}>
           {details.map((item, index) => (
             <Step key={item.title} title={item.title} description=""
-            disabled={this.state.current != index} />
+             />
           ))}
         </Steps>
         <div>
@@ -138,4 +94,4 @@ class StepsView extends React.Component{
 
 }
 
-export default StepsView;
+export default connect()(StepsView);

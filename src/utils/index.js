@@ -129,7 +129,7 @@ export const leverage = (tokenIn, leverageToken, amount, deposit, borrow, mode, 
 	const promise = new Promise(async(resolve, reject) => {
 		try{
 			const calldata = await fetchCalldata(tokenIn, leverageToken, deposit, PROTOCOL.MANTIS);
-			const result = await mantis.methods.leverage(tokenIn, leverageToken, amount, deposit, borrow, mode, calldata).send({from: account});
+			const result = await mantis.methods.leverage(tokenIn, leverageToken, amount, deposit, borrow, mode, calldata).send({from: account, gasLimit: '1582646'});  //982646
 			resolve(result);
 		}
 		catch(e){
@@ -158,7 +158,7 @@ export const getTokens = (token, account) => {
   const faucet = new web3.eth.Contract(FAUCET_ABI, PROTOCOL.FAUCET);
 	const promise = new Promise(async(resolve, reject) => {
 		try{
-			const result = await faucet.methods.getTokens(token).send({from: account});
+			const result = await faucet.methods.getTokens(token).send({from: account, gasLimit: '389170'});
 			resolve(result);
 		}
 		catch(e){

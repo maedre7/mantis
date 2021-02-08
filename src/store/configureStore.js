@@ -3,6 +3,9 @@ import {persistStore, persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage';
 import thunk from 'redux-thunk';
 import accountReducer from '../reducers/account';
+import balanceReducer from '../reducers/balance';
+import reserveReducer from '../reducers/reserve';
+import priceReducer from '../reducers/price';
 
 let composeEnhancers = compose;
 
@@ -17,6 +20,9 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   account: accountReducer,
+  balance: balanceReducer,
+  reserve: reserveReducer,
+  price: priceReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -24,5 +30,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export default () => {
   const store = createStore(persistedReducer, composeEnhancers(applyMiddleware(thunk)));
   const persistor = persistStore(store);
+  persistor.purge();
   return {store, persistor};
 };

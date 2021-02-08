@@ -1,18 +1,20 @@
 import { Slider, InputNumber, Row, Col } from 'antd';
 
 const SliderView = (props) => {
+  const {maxLtv} = props;
+  const defaultValue = maxLtv < 0.50 ? maxLtv : 0.50;
   return (
     <Row>
       <Col span={12}>
         <Slider
           min={0}
-          max={props.maxLtv}
+          max={maxLtv}
           onChange={(val) => props.onChange('ltv', val)}
           value={props.value}  // typeof inputValue === 'number' ? inputValue : 0
           step={0.01}
           trackStyle={{ backgroundColor: '#40C4A6' }}
           handleStyle={{ borderColor: '#40C4A6' }}
-          defaultValue={0.50}
+          defaultValue={defaultValue}
         />
       </Col>
       <Col span={4}>
